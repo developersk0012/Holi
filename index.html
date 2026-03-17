@@ -1,45 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Signup</title>
-
-<link rel="stylesheet" href="style.css">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+  <meta charset="UTF-8">
+  <title>Govind ice cream</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #f5f3ff; margin:0;}
+    .header { background:#772aff; color:#fff; padding:18px 0.5em; font-size:2em; text-align:center; font-weight:600;}
+    .gallery { display:flex; flex-wrap:wrap; gap: 22px; justify-content:center; margin:37px 0;}
+    .icecard { background:#fff; border-radius:13px; box-shadow:0 4px 16px #30084e22; padding:18px 12px 18px 12px; width:260px; margin:12px;}
+    .icecard img { width:230px; height:170px; border-radius:11px; object-fit:cover;}
+    .desc {color:#4b2768;font-weight:500;margin:8px 0 0 0;}
+    .contactbox { background:#53399b; color:#fff; padding:12px 0; text-align:center; font-size:1.1em; border-radius:0 0 18px 18px; position:fixed; width:100%; left:0; bottom:0;}
+    .wa-btn { position:fixed; right:16px; bottom:70px; background:#25d366; width:58px; height:58px; border-radius:50%; box-shadow:0px 8px 17px #2222; z-index:99; display:flex;align-items:center;justify-content:center; }
+    .wa-btn img {width:36px;}
+    .admin-link { position:fixed; top:12px; right:18px; background:#fff; color:#772aff; border-radius:7px; padding:7px 16px;text-decoration:none;font-weight:bold;font-size:1.07em;box-shadow:0 2px 10px #2221;}
+    @media(max-width:700px){ .gallery{flex-direction:column;align-items:center;}.icecard{width:96vw;}.icecard img{width:92vw;}}
+  </style>
 </head>
-
 <body>
+  <div class="header">Govind ice cream</div>
+  <a class="admin-link" href="admin.html">Admin Panel</a>
 
-<div class="box">
+  <div class="gallery" id="gallery"></div>
 
-<h2>Education Website Signup</h2>
+  <a class="wa-btn" href="https://wa.me/7870282153" target="_blank" title="WhatsApp Chat">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="whatsapp">
+  </a>
 
-<form id="signupForm">
+  <div class="contactbox">
+    📧 satendrakumark317@gmail.com &nbsp;&nbsp; 📞 7870282153
+  </div>
 
-<input type="text" id="name" placeholder="Full Name" required>
-
-<input type="tel" id="phone" placeholder="Phone Number" required>
-
-<input type="email" id="email" placeholder="Gmail ID" required>
-
-<input type="password" id="pass" placeholder="Password" required>
-
-<input type="password" id="cpass" placeholder="Confirm Password" required>
-
-<label>Upload Photo</label>
-<input type="file" id="photo" accept="image/*" required>
-
-<button type="submit">Signup</button>
-
-</form>
-
-<h3 id="welcome"></h3>
-
-</div>
-
-<script src="script.js"></script>
-
+  <script>
+  // -------- लोड सारी आइस्क्रीम लिस्ट LocalStorage से -----------
+  function renderGallery() {
+    let data = JSON.parse(localStorage.getItem('govind_icecreams')) || [];
+    let g = document.getElementById("gallery");
+    g.innerHTML = "";
+    if (data.length == 0) {
+      g.innerHTML = `<div style="margin:60px 0 0 0; color:#584b7d;">No Ice creams yet! <br> <small>Only admin can add...</small></div>`;
+      return;
+    }
+    data.forEach(item=>{
+      g.innerHTML += `
+        <div class="icecard">
+          <img src="${item.image}" alt="Ice Cream">
+          <p class="desc">${item.desc}</p>
+        </div>
+      `;
+    });
+  }
+  renderGallery();
+  // User side: edits only via admin panel (admin.html)
+  </script>
 </body>
 </html>
